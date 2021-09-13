@@ -80,6 +80,7 @@ class RankMonitor:
         self.btn['text'] = "Resume"
     
     def exec(self, profileURL: str):
+        
         self.profileURL = profileURL
 
         self.steamID = steam.getSteamID(self.profileURL, STEAM_API_KEY)
@@ -100,6 +101,9 @@ class RankMonitor:
         self.updateLeaderboard()
         
     def updateLeaderboard(self):
+        windowTitle = self.master.title()
+        self.master.title(windowTitle + " " + "[REFRESHING...]")
+
         currentDateTime = getDateTimeNow()
         print(f"[DEBUG | {currentDateTime}] updateLeaderboard() call (SLEEP_SEC = {SLEEP_SEC})")
 
@@ -128,6 +132,8 @@ class RankMonitor:
         # Infinite loop...
         self.afterID = self.master.after(SLEEP_SEC * 1000, self.updateLeaderboard)
 
+        self.master.title(windowTitle)
+
         currentDateTime = getDateTimeNow()
         print(f"[DEBUG | {currentDateTime}] End of updateLeaderboard()")
     
@@ -136,12 +142,13 @@ class RankMonitor:
             Private method (functon ?) for updating the player info part.
         """
         name = self.steamUser.personaName
+        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.EXP_PER_LEVEL})"
 
         joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
         joinDate = joinDateTime.split(" ")[0]
 
         # Order has to be the same as the keys
-        infoValues = [name, joinDate, self.steamID, self.playFabID]
+        infoValues = [name, levelInfo, joinDate, self.steamID, self.playFabID]
         infoDict = dictFromLists(INFO_KEYS, infoValues)
 
         newInfo = genLabelTextFromDict(infoDict, " ")

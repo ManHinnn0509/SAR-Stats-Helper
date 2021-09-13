@@ -118,12 +118,13 @@ class MainWindow:
             Private method (functon ?) for updating the info part.
         """
         name = self.steamUser.personaName
+        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.EXP_PER_LEVEL})"
 
         joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
         joinDate = joinDateTime.split(" ")[0]
 
         # Order has to be the same as the keys
-        infoValues = [name, joinDate, self.steamID, self.playFabID]
+        infoValues = [name, levelInfo, joinDate, self.steamID, self.playFabID]
         infoDict = dictFromLists(INFO_KEYS, infoValues)
 
         newInfo = genLabelTextFromDict(infoDict, " ")

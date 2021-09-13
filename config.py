@@ -10,7 +10,7 @@ WINDOW_SIZE = "650x300"
 SLEEP_SEC = 30              # Should be greater than / equals to 60
 
 # For rank monitor
-# For more category & stat keys, check out const.py
+# For more category & stat keys, check out "const.py"
 RANK_MONITOR_TEMPLATE = {
     "Mystery Mode": {
         "DeathsCustom2": [0, 0],
@@ -43,8 +43,8 @@ ICON_PATH = abspath("./img/icon/dr_beagle_head.ico")
 # Info frame constants
 EXAMPLE_PROFILE_URL = "https://steamcommunity.com/id/AndiSlash/"
 DEFAULT_AVATAR_PATH = abspath("./img/steam_default_avatar.png")
-AVATAR_PIXELS_X = 64
-AVATAR_PIXELS_Y = 64
+AVATAR_PIXELS_X = 80
+AVATAR_PIXELS_Y = 80
 
 # Other
 SAR_EXP_PER_LEVEL = 4200
