@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox as msgbox
+import tkinter
 
 import steam
 import widgets
 from config import *
-from base64_imgs import dr_beagle_head_ico
 from const import INFO_KEYS
+from base64_imgs import dr_beagle_head_ico
 
 from sar import getSessionTicket, getPlayFabID, PlayerLeaderboard, SAR_Player
 from util.img_utils import getImgFromURL
@@ -24,6 +25,7 @@ def main():
     root.mainloop()
 
 class RankMonitor:
+
     def __init__(self, master, sessionTicket: str, leaderboardTemplate: dict) -> None:
         self.master = master
 
@@ -39,30 +41,44 @@ class RankMonitor:
         self.inputFrame = widgets.InputFrame(self, "Steam profile URL: ")
         self.infoFrame = widgets.InfoFrame(self, INFO_KEYS)
 
+        # Temp new button
+        self.btn = tkinter.Button(self.master, text="Pause", command=self.__btnPress)
+        self.btn.pack(pady=3)
+
         # Create data frames
         self.dataFrames = []
         for category, stat in self.leaderboardTemplate.items():
             temp = widgets.DataFrame(self, stat.keys(), category, ipadx=5, padx=5, anchor='n')
             self.dataFrames.append(temp)
-
-    def __updateInfo(self):
-        """
-            Private method (functon ?) for updating the info part.
-        """
-        name = self.steamUser.personaName
-
-        joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
-        joinDate = joinDateTime.split(" ")[0]
-
-        # Order has to be the same as the keys
-        infoValues = [name, joinDate, self.steamID, self.playFabID]
-        infoDict = dictFromLists(INFO_KEYS, infoValues)
-
-        newInfo = genLabelTextFromDict(infoDict, " ")
-        self.playerAvatar = getImgFromURL(self.steamUser.avatarFullURL, AVATAR_PIXELS_X, AVATAR_PIXELS_Y)
-
-        self.infoFrame.infoMsg.config(text=newInfo, image=self.playerAvatar)
-
+        
+        # Early declaration for future functions
+        self.playerLeaderboard = None
+        self.afterID = None
+    
+    def __btnPress(self):
+        if (self.playerLeaderboard == None):
+            return
+        
+        currentDateTime = getDateTimeNow()
+        # Infinite loop not actived
+        if (self.afterID == None):
+            # If the "self.playerLeaderboard" is declared
+            if not (self.playerLeaderboard == None):
+                # Then call the updateLeaderboard() to resume the infinite loop
+                print(f"[DEBUG | {currentDateTime}] RESUME LOOP")
+                self.btn['text'] = "Pause"
+                self.updateLeaderboard()
+            
+            # This return is needed (To prevent canceling the loop after resuming it)
+            return
+        
+        print(f"[DEBUG | {currentDateTime}] CANCEL LOOP")
+        # Cancels the infinite loop
+        # And "deactive" it by setting the self.afterID into None
+        self.master.after_cancel(self.afterID)
+        self.afterID = None
+        self.btn['text'] = "Resume"
+    
     def exec(self, profileURL: str):
         self.profileURL = profileURL
 
@@ -85,7 +101,7 @@ class RankMonitor:
         
     def updateLeaderboard(self):
         currentDateTime = getDateTimeNow()
-        print(f"[DEBUG | {currentDateTime}] updateLeaderboard() call. SLEEP_SEC = {SLEEP_SEC}")
+        print(f"[DEBUG | {currentDateTime}] updateLeaderboard() call (SLEEP_SEC = {SLEEP_SEC})")
 
         updateResult = self.playerLeaderboard.update(replaceOldData=False)
 
@@ -108,12 +124,30 @@ class RankMonitor:
 
             dataFrame.label.config(text=newText)
         
-        # Call self again after waiting for SLEEP_SEC seconds
+        # Call self again after SLEEP_SEC seconds
         # Infinite loop...
-        self.master.after(SLEEP_SEC * 1000, self.updateLeaderboard)
+        self.afterID = self.master.after(SLEEP_SEC * 1000, self.updateLeaderboard)
 
         currentDateTime = getDateTimeNow()
-        print(f"[DEBUG | {currentDateTime}] End of updateLeaderboard().")
+        print(f"[DEBUG | {currentDateTime}] End of updateLeaderboard()")
+    
+    def __updateInfo(self):
+        """
+            Private method (functon ?) for updating the player info part.
+        """
+        name = self.steamUser.personaName
+
+        joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
+        joinDate = joinDateTime.split(" ")[0]
+
+        # Order has to be the same as the keys
+        infoValues = [name, joinDate, self.steamID, self.playFabID]
+        infoDict = dictFromLists(INFO_KEYS, infoValues)
+
+        newInfo = genLabelTextFromDict(infoDict, " ")
+        self.playerAvatar = getImgFromURL(self.steamUser.avatarFullURL, AVATAR_PIXELS_X, AVATAR_PIXELS_Y)
+
+        self.infoFrame.infoMsg.config(text=newInfo, image=self.playerAvatar)
 
 # ---
 

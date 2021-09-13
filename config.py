@@ -7,7 +7,7 @@ load_dotenv()
 # Window setting (Rank monitor)
 TITLE_RANK_MONITOR = "SAR Player Rank Monitor"
 WINDOW_SIZE = "650x300"
-SLEEP_SEC = 60
+SLEEP_SEC = 30              # Should be greater than / equals to 60
 
 # For rank monitor
 # For more category & stat keys, check out const.py

@@ -31,6 +31,8 @@ class InfoFrame:
                 [i + ": " + defaultValue for i in self.infoKeys], " "
             )
         )
+
+        # Add self.row option (?)
         self.infoMsg.grid(row=1, column=0)
 
         self.infoFrame = infoFrame
