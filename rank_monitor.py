@@ -18,6 +18,7 @@ def main():
     if (sessionTicket == None):
         print("[ERROR] Unable to get session ticket. Please try again later")
         return
+    
     print(f"[DEBUG] Session ticket: {sessionTicket}")
 
     root = tk.Tk()
@@ -97,6 +98,7 @@ class RankMonitor:
         self.sarPlayer = SAR_Player(self.sessionTicket, self.playFabID)
         self.__updateInfo()
         
+        # Creates the PlayerLeaderboard object. Then "init" it
         self.playerLeaderboard = PlayerLeaderboard(self.sessionTicket, self.playFabID, self.leaderboardTemplate)
         self.updateLeaderboard()
         

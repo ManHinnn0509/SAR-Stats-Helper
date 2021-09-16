@@ -2,6 +2,7 @@ import io
 import base64
 import requests as req
 
+from typing import Union
 from PIL import Image, ImageTk
 
 # Use Image.NEAREST (0), Image.LANCZOS (1), Image.BILINEAR (2), Image.BICUBIC (3), Image.BOX (4) or Image.HAMMING (5)
@@ -14,7 +15,7 @@ def imgFromBase64(b64Str: str, resizeToPixel_x=None, resizeToPixel_y=None):
     except:
         return None
     
-def getImgFromURL(url: str, resizeToPixel_x=None, resizeToPixel_y=None) -> ImageTk.PhotoImage:
+def getImgFromURL(url: str, resizeToPixel_x=None, resizeToPixel_y=None):
     try:
         r = req.get(url)
         b = r.content
@@ -24,7 +25,7 @@ def getImgFromURL(url: str, resizeToPixel_x=None, resizeToPixel_y=None) -> Image
         # print(e)
         return None
 
-def readImgFromPath(p: str, resizeToPixel_x=None, resizeToPixel_y=None) -> ImageTk.PhotoImage:
+def readImgFromPath(p: str, resizeToPixel_x=None, resizeToPixel_y=None):
     try:
         b = None
         with open(p, 'rb') as f:

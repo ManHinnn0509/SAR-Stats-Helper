@@ -4,6 +4,33 @@ from os.path import abspath
 from dotenv import load_dotenv
 load_dotenv()
 
+# Global window settings
+RESIZE_H = False
+RESIZE_W = False
+ICON_PATH = abspath("./img/icon/dr_beagle_head.ico")
+
+# ------------------------------------------------------------------------
+
+# Info frame constants
+EXAMPLE_PROFILE_URL = "https://steamcommunity.com/id/AndiSlash/"
+DEFAULT_AVATAR_PATH = abspath("./img/steam_default_avatar.png")
+AVATAR_PIXELS_X = 80
+AVATAR_PIXELS_Y = 80
+
+# ------------------------------------------------------------------------
+
+# Window setting (Menu Window)
+TITLE_MENU_WINDOW = "SAR Player Stats Checker & Rank Monitor"
+WINDOW_SIZE_MENU_WINDOW = "500x300"
+
+# ------------------------------------------------------------------------
+
+# Window setting (Stats checker)
+TITLE_STATS_CHECKER = "SAR Player Stats Checker"
+WINDOW_SIZE_STATS_CHECKER = "600x300"
+
+# ------------------------------------------------------------------------
+
 # Window setting (Rank monitor)
 TITLE_RANK_MONITOR = "SAR Player Rank Monitor"
 WINDOW_SIZE = "650x300"
@@ -32,19 +59,6 @@ RANK_MONITOR_TEMPLATE = {
         "RatGG": [0, 0]
     }
 }
-
-# Window setting (Stats checker)
-TITLE = "SAR Player Stats Checker"
-WINDOW_SIZE = "600x300"
-RESIZE_H = False
-RESIZE_W = False
-ICON_PATH = abspath("./img/icon/dr_beagle_head.ico")
-
-# Info frame constants
-EXAMPLE_PROFILE_URL = "https://steamcommunity.com/id/AndiSlash/"
-DEFAULT_AVATAR_PATH = abspath("./img/steam_default_avatar.png")
-AVATAR_PIXELS_X = 80
-AVATAR_PIXELS_Y = 80
 
 # Other
 SAR_EXP_PER_LEVEL = 4200

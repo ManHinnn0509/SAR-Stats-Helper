@@ -8,13 +8,14 @@ import base64
 """
 
 def main():
-    outputFileName = "imgs.py"
+    outputFileName = "base64_imgs.py"
     root = "./img"
 
     # From: https://stackoverflow.com/questions/19309667/recursive-os-listdir
     imgs = [os.path.join(dp, f).replace("\\", "/") for dp, dn, fn in os.walk(os.path.expanduser(root)) for f in fn]
     
     variables = []
+
     for img in imgs:
         fileName = img.split("/")[-1]
         variableName = fileName.replace(".", "_")

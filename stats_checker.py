@@ -25,14 +25,14 @@ def main():
     print(f"[DEBUG] Session ticket: {sessionTicket}")
     
     root = tk.Tk()
-    w = MainWindow(root, sessionTicket)
+    w = StatsChecker(root, sessionTicket)
     root.mainloop()
 
     print("--- End of Program ---")
 
 # --- MainWindow class for status checker
 
-class MainWindow:
+class StatsChecker:
     # Just for telling what variables we're gonna have in this class
     steamUser = None
     sarPlayer = None
@@ -47,8 +47,8 @@ class MainWindow:
 
         # Window setting / info
         setIcon(self.master, dr_beagle_head_ico)
-        master.title(TITLE)
-        master.geometry(WINDOW_SIZE)
+        master.title(TITLE_STATS_CHECKER)
+        master.geometry(WINDOW_SIZE_STATS_CHECKER)
         master.resizable(RESIZE_W, RESIZE_H)
 
         """
