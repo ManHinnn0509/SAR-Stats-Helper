@@ -4,7 +4,31 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class SAR_Player:
-    EXP_PER_LEVEL = 4200
+
+    EXP_NEEDED_TO_LEVEL_UP = {
+        "0": 0,
+        "1": 200,
+        "2": 300,
+        "3": 400,
+        "4": 500,
+        "5": 600,
+        "6": 700,
+        "7": 800,
+        "8": 900,
+        "9": 1000,
+        "10": 1800,
+        "11": 2000,
+        "12": 2200,
+        "13": 2400,
+        "14": 2600,
+        "15": 2800,
+        "16": 3000,
+        "17": 3200,
+        "18": 3400,
+        "19": 3600,
+        "20": 3800,
+        "21": 4000
+    }
 
     def __init__(self, sessionTicket, playFabID):
         self.sessionTicket = sessionTicket
@@ -29,9 +53,10 @@ class SAR_Player:
 
         self.currentLevel = 1 + int(self.statDict["AccountLevelNew"])
         self.currentEXP = int(self.statDict["AccountExpIntoCurrentLevelNew"])
+        self.expNeededToLevelUp = self.EXP_NEEDED_TO_LEVEL_UP.get(str(self.currentLevel), 4200)
 
         self.nextLevel = 1 + self.currentLevel
-        self.expToNextLevel = self.EXP_PER_LEVEL - self.currentEXP
+        self.expToNextLevel = self.expNeededToLevelUp - self.currentEXP
 
     def success(self):
         return self.reqData != None
