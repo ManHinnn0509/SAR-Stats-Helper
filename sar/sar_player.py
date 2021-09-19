@@ -5,6 +5,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class SAR_Player:
 
+    # E.g: Lv 10 -> Lv 11 Requires 1800 EXP
     EXP_NEEDED_TO_LEVEL_UP = {
         "0": 0,
         "1": 200,
