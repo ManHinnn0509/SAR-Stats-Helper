@@ -144,7 +144,7 @@ class RankMonitor:
             Private method (functon ?) for updating the player info part.
         """
         name = self.steamUser.personaName
-        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.EXP_PER_LEVEL})"
+        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.expNeededToLevelUp})"
 
         joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
         joinDate = joinDateTime.split(" ")[0]
