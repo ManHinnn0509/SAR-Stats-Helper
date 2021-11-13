@@ -33,7 +33,7 @@ WINDOW_SIZE_STATS_CHECKER = "600x300"
 
 # Window setting (Rank monitor)
 TITLE_RANK_MONITOR = "SAR Player Rank Monitor"
-WINDOW_SIZE = "650x300"
+WINDOW_SIZE = "1000x300"
 SLEEP_SEC = 30              # Should be greater than / equals to 60
 
 # For rank monitor
@@ -52,7 +52,17 @@ RANK_MONITOR_TEMPLATE = {
         "KillsMagnum": [0, 0],
         "KillsSMG": [0, 0],
         "KillsSniper": [0, 0]
-    }, 
+    },
+    "The Bwoking Dead": {
+        'GamesCustom3': [0, 0],
+        'KillsCustom3': [0, 0],
+        'DeathsCustom3': [0, 0],
+        'WinsCustom3': [0, 0],
+        'MostKillsCustom3': [0, 0],
+        'KillsCustom3Z': [0, 0],
+        'DeathsCustom3Z': [0, 0],
+        'MostKillsCustom3Z': [0, 0]
+    },
     "Other": {
         "CoconutsAte": [0, 0],
         "MushroomsAte": [0, 0],
