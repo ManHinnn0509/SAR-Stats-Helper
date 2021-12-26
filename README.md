@@ -1,9 +1,16 @@
-# SAR-Stats-Helper
+# SAR-Stats-Helper <a href='#'><img src='./img/icon/dr_beagle_head.ico' align="right" height="138.5" /></a>
 
 Player stats checker, rank monitor for Super Animal Royale
-<br>
-<br>
-Run `python menu_window.py` to get started
+
+## Running this program
+
+If you want to run them individually, you can do `python stats_checker.py` or `python rank_monitor.py`
+
+Or, if you want a main window what spawns multuple stats checker / rank monitor. You can do `python menu_window.py` or just start the `run.bat` file
+
+## Requirements
+
+See [requirements.txt](requirements.txt)
 
 ## Demo (images)
 
