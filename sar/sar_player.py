@@ -49,73 +49,81 @@ class SAR_Player:
             self.statDict[s["StatisticName"]] = s["Value"]
         
         # UTC Time
-        self.accountCreateDateTime = str(self.accountInfo["Created"])
-        self.accountCreateDate = self.accountCreateDateTime.split(" ")[0]
+        self.accountCreateDateTime_UTC = str(self.accountInfo["Created"])
+        self.accountCreateDate = self.accountCreateDateTime_UTC.split(" ")[0]
 
         self.currentLevel = 1 + int(self.statDict["AccountLevelNew"])
         self.currentEXP = int(self.statDict["AccountExpIntoCurrentLevelNew"])
-        self.expNeededToLevelUp = self.EXP_NEEDED_TO_LEVEL_UP.get(str(self.currentLevel), 4200)
+        self.currentLevelTotalEXP = self.EXP_NEEDED_TO_LEVEL_UP.get(str(self.currentLevel), 4200)
 
         self.nextLevel = 1 + self.currentLevel
-        self.expToNextLevel = self.expNeededToLevelUp - self.currentEXP
+        self.expToNextLevel = self.currentLevelTotalEXP - self.currentEXP
 
     def success(self):
         return self.reqData != None
+        
+    def __getPlayerData(self):
+        """
+            Gets a player's info via GetPlayerCombinedInfo() \n
+            See https://d36d.playfabapi.com/Client/GetPlayerCombinedInfo
+        """
+
+        url = "https://d36d.playfabapi.com/Client/GetPlayerCombinedInfo"
+
+        h = {
+            "X-Authorization": self.sessionTicket
+        }
+
+        b = {
+            "InfoRequestParameters": {
+                "GetPlayerProfile": True,
+                "GetUserAccountInfo": True,
+                "GetPlayerStatistics": True,
+                "GetUserData": True
+            },
+            "PlayFabId": self.playFabID
+        }
+
+        r = req.post(url=url, headers=h, json=b, verify=False)
+
+        if (r.status_code != 200):
+            return None
+        
+        try:
+            return r.json()
+        except:
+            return None
 
     def getSoloStat(self):
         keys = ["Wins", "Kills", "Deaths", "Games", "Top5", "Games", "MostKills"]
-        return self.__formatStats(keys)
+        return self.__formatDefaultStats(keys)
     
     def getDuosStat(self):
         keys = ["WinsDuos", "KillsDuos", "DeathsDuos", "GamesDuos", "Top3Duos", "GamesDuos", "MostKillsDuos"]
-        return self.__formatStats(keys)
+        return self.__formatDefaultStats(keys)
     
     def getSquadsStat(self):
         keys = ["WinsSquads", "KillsSquads", "DeathsSquads", "GamesSquads", "Top2Squads", "GamesSquads", "MostKillsSquads"]
-        return self.__formatStats(keys)
+        return self.__formatDefaultStats(keys)
         
     def getSAW_RebellionStat(self):
         keys = ["WinsCustom1", "KillsCustom1", "DeathsCustom1", "GamesCustom1", "N/A", "GamesCustom1", "MostKillsCustom1"]
-        return self.__formatStats(keys)
+        return self.__formatDefaultStats(keys)
     
     def getMysteryModeStat(self):
         keys = ["WinsCustom2", "KillsCustom2", "DeathsCustom2", "GamesCustom2", "Top2Custom2", "GamesCustom2", "MostKillsCustom2"]
-        return self.__formatStats(keys)
+        return self.__formatDefaultStats(keys)
 
-    def getTotalKills(self):
-        keys = [
-            "Kills",
-            "KillsDuos",
-            "KillsSquads",
-            "KillsCustom1",
-            "KillsCustom2"
-        ]
-
-        return self.__calcTotalSum(keys)
-    
-    def getTotalDeaths(self):
-        keys = [
-            "Deaths",
-            "DeathsDuos",
-            "DeathsSquads",
-            "DeathsCustom1",
-            "DeathsCustom2"
-        ]
-
-    def __calcTotalSum(self, dataKeys: list) -> int:
-        """
-            Calculate total sum of a list of given keys
-        """
-        d = self.statDict
-        count = 0
-        for k in dataKeys:
-            count += d.get(k, 0)
-        
-        return count
-
-    def __formatStats(self, keys: list):
+    def __formatDefaultStats(self, keys: list):
         """
             Calculate and format player stats with given keys
+
+            Supported gamemode(s):
+            - Solo
+            - Duos
+            - Squad
+            - 32 vs 32
+            - Mystery mode
         """
         d = self.statDict
         perfectKD = "∞"
@@ -150,38 +158,98 @@ class SAR_Player:
         # These are the result calculated
         values = [wins, gamesPlayed, kills, deaths, kd, winRate, top, mostKills]
         
+        # Old version uses 'Games played'
+        # statNames = ['Wins', "Games played", "Kills", "Deaths", "K/D", "Win rate", "Top", "Most kills"]
+
+        statNames = ['Wins', "Played", "Kills", "Deaths", "K/D", "Win rate", "Top", "Most kills"]
+
         # Merge the keys & values into dict()
-        statNames = ['Wins', "Games played", "Kills", "Deaths", "K/D", "Win rate", "Top", "Most kills"]
         return dict(zip(statNames, values))
+    
+    def getSuperHowloweenStat(self):
+        d = self.statDict
 
-    def __getPlayerData(self):
-        """
-            Gets a player's info via GetPlayerCombinedInfo() \n
-            See https://d36d.playfabapi.com/Client/GetPlayerCombinedInfo
-        """
+        # Survivor
+        gamesPlayed = d.get('GamesCustom3', 'N/A')
+        wins = d.get('WinsCustom3', 'N/A')
 
-        url = "https://d36d.playfabapi.com/Client/GetPlayerCombinedInfo"
+        kills = d.get('KillsCustom3', 'N/A')
+        deaths = d.get('DeathsCustom3', 'N/A')
 
-        h = {
-            "X-Authorization": self.sessionTicket
-        }
+        mostKills = d.get('MostKillsCustom3', 'N/A')
 
-        b = {
-            "InfoRequestParameters": {
-                "GetPlayerProfile": True,
-                "GetUserAccountInfo": True,
-                "GetPlayerStatistics": True,
-                "GetUserData": True
-            },
-            "PlayFabId": self.playFabID
-        }
-
-        r = req.post(url=url, headers=h, json=b, verify=False)
-
-        if (r.status_code != 200):
-            return None
+        # Zombie
+        killsZ = d.get('KillsCustom3Z', 'N/A')
+        deathsZ = d.get('DeathsCustom3Z', 'N/A')
         
+        mostKillsZ = d.get('MostKillsCustom3Z', 'N/A')
+
+        # Calculate win rate
         try:
-            return r.json()
+            winRate = "%.2f" % ((wins / gamesPlayed * 100))
+            winRate = str(winRate) + " %"
         except:
-            return None
+            winRate = "N/A"
+        
+        # Calculate K/D (Survivor)
+        try:
+            kd = "%.2f" % (kills / deaths)
+        except:
+            kd = "N/A"
+        
+        # Calculate K/D (Zombie)
+        try:
+            kdZ = "%.2f" % (killsZ / deathsZ)
+        except:
+            kdZ = "N/A"
+
+        values = [
+            wins,
+            gamesPlayed,
+            winRate,
+
+            kills,
+            deaths,
+            kd,
+            mostKills,
+
+            killsZ,
+            deathsZ,
+            kdZ,
+            mostKillsZ
+        ]
+
+        '''
+        statNames = [
+            "Wins",
+            "Games played",
+            "Win rate",
+
+            "Kills (Survivor)",
+            "Deaths (Survivor)",
+            "KD (Survivor)",
+            "Most kills (Survivor)",
+
+            "Kills (Zombie)",
+            "Deaths (Zombie)",
+            "KD (Zombie)",
+            "Most kills (Zombie)",
+        ]
+        '''
+
+        statNames = [
+            "Wins",
+            "Played",
+            "Win rate",
+
+            "(S) Kills",
+            "(S) Deaths",
+            "(S) K/D",
+            "(S) Most kills",
+
+            "(Z) Kills",
+            "(Z) Deaths",
+            "(Z) K/D",
+            "(Z) Most kills",
+        ]
+        return dict(zip(statNames, values))

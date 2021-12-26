@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 from config import *
 from base64_imgs import dr_beagle_head_ico
-from const import GAMEMODES, DATA_KEYS, INFO_KEYS
+from const import GAMEMODES, INFO_KEYS
 
 from util.time_utils import convertTime
 from util.img_utils import getImgFromURL
@@ -18,6 +18,7 @@ def main():
 
     # Error handling here? or in the MainWindow?...
     # I'm just gonna keep it here first
+    
     sessionTicket = getSessionTicket(PLAYFAB_AC, PLAYFAB_PW)
     if (sessionTicket == None):
         print("[ERROR] Unable to get session ticket. Please try again later")
@@ -62,7 +63,8 @@ class StatsChecker:
         self.inputFrame = InputFrame(self, "Steam profile URL: ")
         self.infoFrame = InfoFrame(self, INFO_KEYS)
 
-        self.dataFrames = [DataFrame(self, DATA_KEYS, mode, ipadx=8, padx=8) for mode in GAMEMODES]
+        # self.dataFrames = [DataFrame(self, DATA_KEYS, mode, ipadx=8, padx=8) for mode in GAMEMODES]
+        self.dataFrames = [DataFrame(self, ["---"] * 8, mode, ipadx=1, padx=8) for mode in GAMEMODES]
     
     def exec(self, profileURL):
         self.profileURL = profileURL
@@ -94,33 +96,27 @@ class StatsChecker:
             self.sarPlayer.getDuosStat(),
             self.sarPlayer.getSquadsStat(),
             self.sarPlayer.getSAW_RebellionStat(),
-            self.sarPlayer.getMysteryModeStat()
+            self.sarPlayer.getMysteryModeStat(),
+            self.sarPlayer.getSuperHowloweenStat()
         ]
 
-        dataKeys = list(DATA_KEYS)
-        
-        for i in range(0, len(self.dataFrames)):
-            # Gamemode is also the "title"
-            gamemode = GAMEMODES[i]
+        for i in range(len(stats)):
+            gamemodeName = GAMEMODES[i]
+            gamemode = stats[i]
 
-            # Only the value from the dict is needed. So extract the values from it
-            statValues = list(stats[i].values())
+            lines = genLabelTextFromDict(gamemode)
+            lines = f"{gamemodeName}\n{lines}"
 
-            # Stat name & value pair
-            pair = dictFromLists(dataKeys, statValues)
-            lines = genLabelTextFromDict(pair)
-            lines = gamemode + "\n" + lines
-
-            self.dataFrames[i].label.config(text=lines)
+            self.dataFrames[i].label.config(justify=tk.LEFT, text=lines)
 
     def __updateInfo(self):
         """
             Private method (functon ?) for updating the info part.
         """
         name = self.steamUser.personaName
-        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.expNeededToLevelUp})"
+        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.currentLevelTotalEXP})"
 
-        joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
+        joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime_UTC, returnString=True)
         joinDate = joinDateTime.split(" ")[0]
 
         # Order has to be the same as the keys

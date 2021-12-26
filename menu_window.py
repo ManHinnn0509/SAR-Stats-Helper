@@ -61,8 +61,6 @@ class MenuWindow:
             2, 0, 5
         )
 
-        pass
-
 class AppInfoFrame:
     def __init__(self, mainWindow) -> None:
         self.mainWindow = mainWindow
@@ -75,7 +73,7 @@ class AppInfoFrame:
         self.textInfo = '''
             SAR Stats Checker & Rank Monitor
 
-            By AndiSlash
+            By ManHinnn0509
         '''
 
         self.label = tk.Label(

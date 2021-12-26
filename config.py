@@ -27,13 +27,13 @@ WINDOW_SIZE_MENU_WINDOW = "500x300"
 
 # Window setting (Stats checker)
 TITLE_STATS_CHECKER = "SAR Player Stats Checker"
-WINDOW_SIZE_STATS_CHECKER = "600x300"
+WINDOW_SIZE_STATS_CHECKER = "750x330"
 
 # ------------------------------------------------------------------------
 
 # Window setting (Rank monitor)
 TITLE_RANK_MONITOR = "SAR Player Rank Monitor"
-WINDOW_SIZE = "1000x300"
+WINDOW_SIZE = "900x300"
 SLEEP_SEC = 30              # Should be greater than / equals to 60
 
 # For rank monitor

@@ -20,7 +20,7 @@ class DataFrame:
 
         self.label = tk.Label(
             self.dataFrame,
-            justify=tk.LEFT,
+            justify=tk.CENTER,
             text=self.__genLines()
         )
         self.label.grid()

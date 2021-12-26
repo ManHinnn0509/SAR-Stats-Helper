@@ -1,7 +1,7 @@
 # Don't change the order...
 INFO_KEYS = ('遊戲名稱', '等級　　', '加入日期', 'STEAM64 ID', 'PLAYFAB   ID')
-GAMEMODES = ('單人模式', '雙人模式', '團隊模式', 'S.A.W vs. 反抗軍', '神秘模式')
-DATA_KEYS = ('勝場', '遊玩場數', '擊殺數', '死亡數', 'K/D', '勝率', 'Top', '最高擊殺數')
+GAMEMODES = ('單人模式', '雙人模式', '團隊模式', 'S.A.W vs. 反抗軍', '神秘模式', "行雞走肉")
+# DATA_KEYS = ('勝場', '遊玩場數', '擊殺數', '死亡數', 'K/D', '勝率', 'Top', '最高擊殺數')
 
 # Default template
 LEADERBOARD_POSITIONS_TEMPLATE_FULL = {
@@ -48,6 +48,16 @@ LEADERBOARD_POSITIONS_TEMPLATE_FULL = {
       "Top2Custom2": [0, 0],
       "WinsCustom2": [0, 0]
    },
+    "The Bwoking Dead": {
+        'GamesCustom3': [0, 0],
+        'KillsCustom3': [0, 0],
+        'DeathsCustom3': [0, 0],
+        'WinsCustom3': [0, 0],
+        'MostKillsCustom3': [0, 0],
+        'KillsCustom3Z': [0, 0],
+        'DeathsCustom3Z': [0, 0],
+        'MostKillsCustom3Z': [0, 0]
+    },
    "Combat": {
       "BananaHits": [0, 0],
       "DamageDealt": [0, 0],

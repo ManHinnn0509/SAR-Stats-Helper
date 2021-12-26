@@ -15,6 +15,7 @@ from util.utils import setIcon, dictFromLists, genLabelTextFromDict
 
 def main():
     sessionTicket = getSessionTicket(PLAYFAB_AC, PLAYFAB_PW)
+
     if (sessionTicket == None):
         print("[ERROR] Unable to get session ticket. Please try again later")
         return
@@ -144,9 +145,9 @@ class RankMonitor:
             Private method (functon ?) for updating the player info part.
         """
         name = self.steamUser.personaName
-        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.expNeededToLevelUp})"
+        levelInfo = f"{self.sarPlayer.currentLevel} ({self.sarPlayer.currentEXP} / {self.sarPlayer.currentLevelTotalEXP})"
 
-        joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime, returnString=True)
+        joinDateTime = convertTime(self.sarPlayer.accountCreateDateTime_UTC, returnString=True)
         joinDate = joinDateTime.split(" ")[0]
 
         # Order has to be the same as the keys
