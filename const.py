@@ -1,7 +1,9 @@
 # Don't change the order...
 INFO_KEYS = ('遊戲名稱', '等級　　', '加入日期', 'STEAM64 ID', 'PLAYFAB   ID')
 GAMEMODES = ('單人模式', '雙人模式', '團隊模式', 'S.A.W vs. 反抗軍', '神秘模式', "行雞走肉")
-# DATA_KEYS = ('勝場', '遊玩場數', '擊殺數', '死亡數', 'K/D', '勝率', 'Top', '最高擊殺數')
+
+# DEFAULT_DATA_KEYS = ('勝場', '遊玩場數', '擊殺數', '死亡數', 'K/D', '勝率', 'Top', '最高擊殺數')
+# HOWLOWEEN_DATA_KEYS = ('')
 
 # Default template
 LEADERBOARD_POSITIONS_TEMPLATE_FULL = {
