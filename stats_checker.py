@@ -13,13 +13,15 @@ from sar import SAR_Player, getSessionTicket, getPlayFabID
 from steam import SteamUser, getSteamID
 from widgets import InfoFrame, DataFrame, InputFrame
 
+from sys import platform
+
 def main():
     print("[DEBUG] Launching...")
 
     # Error handling here? or in the MainWindow?...
     # I'm just gonna keep it here first
     
-    sessionTicket = getSessionTicket(PLAYFAB_AC, PLAYFAB_PW)
+    sessionTicket = getSessionTicket(PLAYFAB_EMAIL, PLAYFAB_PW)
     if (sessionTicket == None):
         print("[ERROR] Unable to get session ticket. Please try again later")
         return
@@ -47,13 +49,14 @@ class StatsChecker:
         self.master = master
 
         # Window setting / info
-        setIcon(self.master, dr_beagle_head_ico)
+        if(platform != "linux" and platform != "linux2"):
+            setIcon(self.master, dr_beagle_head_ico)
         master.title(TITLE_STATS_CHECKER)
         master.geometry(WINDOW_SIZE_STATS_CHECKER)
         master.resizable(RESIZE_W, RESIZE_H)
 
         """
-        self.sessionTicket = getSessionTicket(PLAYFAB_AC, PLAYFAB_PW)
+        self.sessionTicket = getSessionTicket(PLAYFAB_EMAIL, PLAYFAB_PW)
         if (self.sessionTicket == None):
             msgbox.showerror("ERROR", "Unable to generate session ticket. Now exiting...")
             return

@@ -12,12 +12,14 @@ from sar import getSessionTicket
 from stats_checker import StatsChecker
 from rank_monitor import RankMonitor
 
+from sys import platform
+
 # These Classes should stay in this .py file
 # Since it's created for this .py file & only being used in this .py file
 
 def main():
 
-    sessionTicket = getSessionTicket(PLAYFAB_AC, PLAYFAB_PW)
+    sessionTicket = getSessionTicket(PLAYFAB_EMAIL, PLAYFAB_PW)
     if (sessionTicket == None):
         print("Unable to get session ticket. Now returning...")
         return
@@ -38,7 +40,8 @@ class MenuWindow:
     def __init__(self, master, sessionTicket) -> None:
         self.master = master
 
-        setIcon(master, dr_beagle_head_ico)
+        if(platform != "linux" and platform != "linux2"):
+            setIcon(master, dr_beagle_head_ico)
         master.title(TITLE_MENU_WINDOW)
         master.geometry(WINDOW_SIZE_MENU_WINDOW)
         master.resizable(RESIZE_W, RESIZE_H)

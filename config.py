@@ -33,7 +33,7 @@ WINDOW_SIZE_STATS_CHECKER = "750x330"
 
 # Window setting (Rank monitor)
 TITLE_RANK_MONITOR = "SAR Player Rank Monitor"
-WINDOW_SIZE = "900x300"
+WINDOW_SIZE = "1200x500"
 SLEEP_SEC = 30              # Should be greater than / equals to 60
 
 # For rank monitor

@@ -8,17 +8,17 @@ from sar.exceptions import *
 from sar.sar_player import SAR_Player
 from sar.player_leaderboard import PlayerLeaderboard
 
-def getSessionTicket(playFab_AC, playFab_PW):
+def getSessionTicket(playFab_Email, playFab_PW):
     """
-        Gets session ticket for SAR via LoginWithPlayFab() \n
-        See https://d36d.playfabapi.com/Client/LoginWithPlayFab
+        Gets session ticket for SAR via LoginWithEmail() \n
+        See https://titleId.playfabapi.com/Client/LoginWithEmailAddress
     """
 
     TITLE_ID = "D36D"
-    apiURL = "https://d36d.playfabapi.com/Client/LoginWithPlayFab"
+    apiURL = "https://titleId.playfabapi.com/Client/LoginWithEmailAddress"
 
     body = {
-        "Username": playFab_AC,
+        "Email": playFab_Email,
         "Password": playFab_PW,
         "TitleId": TITLE_ID
     }

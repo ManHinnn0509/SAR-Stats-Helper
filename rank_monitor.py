@@ -13,8 +13,10 @@ from util.img_utils import getImgFromURL
 from util.time_utils import convertTime, getDateTimeNow
 from util.utils import setIcon, dictFromLists, genLabelTextFromDict
 
+from sys import platform
+
 def main():
-    sessionTicket = getSessionTicket(PLAYFAB_AC, PLAYFAB_PW)
+    sessionTicket = getSessionTicket(PLAYFAB_EMAIL, PLAYFAB_PW)
 
     if (sessionTicket == None):
         print("[ERROR] Unable to get session ticket. Please try again later")
@@ -32,7 +34,8 @@ class RankMonitor:
         self.master = master
 
         # Window (root) setting
-        setIcon(self.master, dr_beagle_head_ico)
+        if(platform != "linux" and platform != "linux2"):
+            setIcon(self.master, dr_beagle_head_ico)
         master.title(TITLE_RANK_MONITOR)
         master.geometry(WINDOW_SIZE)
         master.resizable(RESIZE_W, RESIZE_H)

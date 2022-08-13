@@ -14,9 +14,9 @@ See [requirements.txt](requirements.txt)
 
 ## PlayFab session ticket
 
-This project uses endpoint [LoginWithPlayFab](https://docs.microsoft.com/en-us/rest/api/playfab/client/authentication/login-with-playfab?view=playfab-rest) to generate session ticket
+This project uses endpoint [LoginWithEmailAddress](https://docs.microsoft.com/en-us/rest/api/playfab/client/authentication/login-with-email-address?view=playfab-rest) to generate session ticket
 
-In this case, PlayFab **Username** and **Password** is required (Stored in `.env` file)
+In this case, PlayFab **Email** and **Password** is required (Stored in `.env` file)
 
 You can check out the function in [here](https://github.com/ManHinnn0509/SAR-Stats-Helper/blob/main/sar/__init__.py#L11) for more details
 
@@ -31,7 +31,7 @@ Template:
 STEAM_API_KEY=YOUR_STEAM_WEB_API_KEY_HERE
 
 # PlayFab
-PLAYFAB_AC=YOUR_PLAYFAB_USERNAME_HERE
+PLAYFAB_EMAIL=YOUR_PLAYFAB_EMAIL_HERE
 PLAYFAB_PW=YOUR_PLAYFAB_PASSWORD_HERE
 ```
 
